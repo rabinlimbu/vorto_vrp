@@ -66,8 +66,6 @@ public class VRPManager {
         for (Load loadItem : loadMap.values()) {
             setDropOffToAllOtherLoads(loadItem);
         }
-
-        Map<Integer, Load> check = loadMap;
     }
 
     /**
