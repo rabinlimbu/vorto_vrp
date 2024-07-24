@@ -16,7 +16,7 @@ public class LoadAssignment {
 
     /**
      * drivers are assigned to loads based on distance.
-     * @return
+     * @return Result
      */
     public Result assignLoadsToDrivers() {
         List<List<Integer>> allLoadAssigned = new ArrayList<>();
@@ -89,7 +89,6 @@ public class LoadAssignment {
         return result;
     }
 
-
     private Load getNextClosestLoadProspect(Load parentLoad, Double currentTotalTime) {
         List<Load> otherLoadList = parentLoad.getDropOffToOtherLoads().stream()
                 .sorted((a, b) -> Double.compare(a.getDistanceFromSourceDropOff(), b.getDistanceFromSourceDropOff()))
@@ -99,10 +98,7 @@ public class LoadAssignment {
             Load nextParentLoad = this.loadMap.get(nextLoad.getLoadNumber());
             if (nextParentLoad.getState().equals(LoadState.NOT_STARTED)) {
                 Double newCurrentTotalTimeToDropOff = getTotalTimeToDropOffLoad(nextLoad, currentTotalTime);
-                //Double newCurrentTotalTimeToDepot = getNewCurrentTotalTimeToDepot(driverCurrentTotalTime, otherLoad);
-
                 Double newUsedTimeToDropOffInPercent = getDriverUsedTimeInPercent(newCurrentTotalTimeToDropOff);
-                //Double newUsedTimeToDepotInPercent = getDriverUsedTimeInPercent(newCurrentTotalTimeToDepot);
 
                 if (newUsedTimeToDropOffInPercent < AppConfig.CHECK_OTHER_LOAD_THRESHOLD)
                     return nextLoad;
