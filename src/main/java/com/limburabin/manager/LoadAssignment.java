@@ -50,7 +50,7 @@ public class LoadAssignment {
                         String breakpoint = "";
                     }
 
-                    //find the next closest load from the existing drop off
+                    //find the next closest load from the current drop off
                     Load nextLoad = getNextClosestLoadProspect(load, currentTotalTime);
                     while (nextLoad != null) {
                         Load parentLoad = loadMap.get(nextLoad.getLoadNumber());
