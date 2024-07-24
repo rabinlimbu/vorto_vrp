@@ -7,5 +7,6 @@ Getting Started:
 
 Execute via command line:
 1) cd to a directory of this project on your machine and if you are on current directory on /build
-than copy and paste below command to execute. please make sure the file path has -vrp <absolute path to a file>.
+than copy and paste below command to execute. please make sure the file path has -vrp <absolute path to a file> 
+and if not you will get error stating its required.
 2) java -jar vorto_vrp.jar -vrp /Users/rabinlimbu/development/vorto/training-problems/problem20.txt

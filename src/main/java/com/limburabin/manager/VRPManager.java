@@ -50,8 +50,6 @@ public class VRPManager {
      * drop off to depot etc
      */
     private void preProcessLoadData() {
-        // update a load with distance from depot to pickup location
-        // create a load priority queue by depot to load pickup location distance
         if (loadMap.isEmpty())
             return;
         loadMap.values().stream().forEach((loadItem -> {
