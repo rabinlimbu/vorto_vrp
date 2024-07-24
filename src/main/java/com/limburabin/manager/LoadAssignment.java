@@ -15,7 +15,7 @@ public class LoadAssignment {
     }
 
     /**
-     * drivers are assigned to loads based on distance.
+     * drivers are assigned to loads based on closest distance.
      * @return Result
      */
     public Result assignLoadsToDrivers() {
@@ -23,6 +23,7 @@ public class LoadAssignment {
         Integer totalDrivers = 0, totalLoads = 0;
         Double totalTimeOfAllDrivers = 0.0;
 
+        //sorting loads by distance to depot
         List<Load> loadList = this.loadMap.values().stream().sorted((a, b) -> Double.compare(a.getDistanceFromDepot(), b.getDistanceFromDepot()))
                 .collect(Collectors.toList());
 

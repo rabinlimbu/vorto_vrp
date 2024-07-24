@@ -4,6 +4,7 @@ package com.limburabin.manager;
 import java.io.*;
 import java.util.*;
 
+import com.limburabin.common.AppConfig;
 import com.limburabin.common.AppUtil;
 import com.limburabin.model.*;
 
@@ -54,13 +55,13 @@ public class VRPManager {
         if (loadMap.isEmpty())
             return;
         loadMap.values().stream().forEach((loadItem -> {
-            Double distanceFromDepot = getDistance(new Point(0.0, 0.0), loadItem.getPickUp());
+            Double distanceFromDepot = getDistance(new Point(AppConfig.DEPOT_POINT_X, AppConfig.DEPOT_POINT_Y), loadItem.getPickUp());
             loadItem.setDistanceFromDepot(distanceFromDepot);
 
             Double pickUpDropOffDistance = getDistance(loadItem.getPickUp(), loadItem.getDropOff());
             loadItem.setDistanceFromPickUpToDropOff(pickUpDropOffDistance);
 
-            Double distanceFromDropOffToDepot = getDistance(loadItem.getDropOff(), new Point(0.0, 0.0));
+            Double distanceFromDropOffToDepot = getDistance(loadItem.getDropOff(), new Point(AppConfig.DEPOT_POINT_X, AppConfig.DEPOT_POINT_Y));
             loadItem.setDistanceFromDropOffToDepot(distanceFromDropOffToDepot);
         }));
 
