@@ -7,7 +7,7 @@ public class Load {
     private final Point pickUp;
     private final Point dropOff;
     private Double distanceFromDepot;
-    private Double distanceFromPickToDropOff;
+    private Double distanceFromPickUpToDropOff;
     private Double distanceFromDropOffToDepot;
     private Double distanceFromSourceDropOff;
     private List<Load> dropOffToOtherLoads;
@@ -22,7 +22,7 @@ public class Load {
 
     public Load(Load existingLoad, Double distanceFromSourceDropOff) {
         this(existingLoad.loadNumber, existingLoad.getPickUp(), existingLoad.getDropOff());
-        this.setDistanceFromPickToDropOff(existingLoad.getDistanceFromPickToDropOff());
+        this.setDistanceFromPickUpToDropOff(existingLoad.getDistanceFromPickUpToDropOff());
         this.setDistanceFromDropOffToDepot(existingLoad.getDistanceFromDropOffToDepot());
         this.distanceFromSourceDropOff = distanceFromSourceDropOff;
     }
@@ -47,12 +47,12 @@ public class Load {
         this.distanceFromDepot = distance;
     }
 
-    public Double getDistanceFromPickToDropOff() {
-        return this.distanceFromPickToDropOff;
+    public Double getDistanceFromPickUpToDropOff() {
+        return this.distanceFromPickUpToDropOff;
     }
 
-    public void setDistanceFromPickToDropOff(Double distance) {
-        this.distanceFromPickToDropOff = distance;
+    public void setDistanceFromPickUpToDropOff(Double distance) {
+        this.distanceFromPickUpToDropOff = distance;
     }
 
     public Double getDistanceFromDropOffToDepot() {

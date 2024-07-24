@@ -13,6 +13,11 @@ public class VRPManager {
     public VRPManager() {
     }
 
+    /**
+     *
+     * @param filePath
+     * @throws IOException
+     */
     public void importLoads(String filePath) throws IOException {
         BufferedReader reader =
                 new BufferedReader(new FileReader(filePath));
@@ -40,7 +45,8 @@ public class VRPManager {
     }
 
     /**
-     * preparing data
+     * preparing data with distances like depot to all loads, pick up and drop off load,
+     * drop off to depot etc
      */
     private void preProcessLoadData() {
         // update a load with distance from depot to pickup location
@@ -52,7 +58,7 @@ public class VRPManager {
             loadItem.setDistanceFromDepot(distanceFromDepot);
 
             Double pickUpDropOffDistance = getDistance(loadItem.getPickUp(), loadItem.getDropOff());
-            loadItem.setDistanceFromPickToDropOff(pickUpDropOffDistance);
+            loadItem.setDistanceFromPickUpToDropOff(pickUpDropOffDistance);
 
             Double distanceFromDropOffToDepot = getDistance(loadItem.getDropOff(), new Point(0.0, 0.0));
             loadItem.setDistanceFromDropOffToDepot(distanceFromDropOffToDepot);
@@ -65,12 +71,17 @@ public class VRPManager {
         Map<Integer, Load> check = loadMap;
     }
 
+    /**
+     * associating all other loads by distance from source load.
+     * source load is the current load that one of the driver is currently
+     * working on.
+     * @param source
+     */
     private void setDropOffToAllOtherLoads(Load source) {
         List<Load> distanceToOtherLoads = new ArrayList<>();
         for (Load load : loadMap.values()) {
             if (!source.getLoadNumber().equals(load.getLoadNumber())) {
                 Double distanceFromSourceDropOff = getDistance(source.getDropOff(), load.getPickUp());
-                //load.setDistanceToOtherDropOff(distanceToOtherDropOff);
                 Load otherLoad = new Load(load, distanceFromSourceDropOff);
                 distanceToOtherLoads.add(otherLoad);
             }

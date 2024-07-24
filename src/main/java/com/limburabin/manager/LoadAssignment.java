@@ -15,13 +15,7 @@ public class LoadAssignment {
     }
 
     /**
-     * check the closest load from load.getDropOffToOtherLoads()
-     * if it is good then check threshold < AppConfig.CHECK_OTHER_LOAD_THRESHOLD
-     * with newCurrentTotalTimeToDropOff
-     * if it is good then add the load from parent load to load stack which is loadMap.get(loadNumber)
-     * if threshold fails then quit this check and do calculations for this driver
-     * if threshold pass then repeat
-     *
+     * drivers are assigned to loads based on distance.
      * @return
      */
     public Result assignLoadsToDrivers() {
@@ -42,7 +36,7 @@ public class LoadAssignment {
                 load.setState(LoadState.IN_PROGRESS);
                 totalDrivers += 1;
                 loadStack.push(load);
-                currentTotalTime += load.getDistanceFromDepot() + load.getDistanceFromPickToDropOff();
+                currentTotalTime += load.getDistanceFromDepot() + load.getDistanceFromPickUpToDropOff();
                 driverCurrentTotalTimeStack.push(currentTotalTime);
 
                 Double driverUsedTimeInPercent = getDriverUsedTimeInPercent(currentTotalTime);
@@ -121,14 +115,14 @@ public class LoadAssignment {
 
     public Double getNewCurrentTotalTimeToDepot(Load nextLoad, Double currentTotalTime) {
         Double newCurrentTotalTime = nextLoad.getDistanceFromSourceDropOff() +
-                nextLoad.getDistanceFromPickToDropOff() +
+                nextLoad.getDistanceFromPickUpToDropOff() +
                 nextLoad.getDistanceFromDropOffToDepot() + currentTotalTime;
         return newCurrentTotalTime;
     }
 
     public Double getTotalTimeToDropOffLoad(Load nextLoad, Double currentTotalTime) {
         Double totalTimeToDropOffLoad = nextLoad.getDistanceFromSourceDropOff() +
-                nextLoad.getDistanceFromPickToDropOff() + currentTotalTime;
+                nextLoad.getDistanceFromPickUpToDropOff() + currentTotalTime;
         return totalTimeToDropOffLoad;
     }
 
