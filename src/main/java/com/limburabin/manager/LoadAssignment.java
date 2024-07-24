@@ -33,19 +33,24 @@ public class LoadAssignment {
             List<Integer> loadAssigned = new ArrayList<>();
 
             Double currentTotalTime = 0.0;
+
+            //checking if the load has already been completed or in the process of completion
             if (this.loadMap.get(load.getLoadNumber()).getState().equals(LoadState.NOT_STARTED)) {
                 load.setState(LoadState.IN_PROGRESS);
                 totalDrivers += 1;
+                //using stack to keep track of all the possible loads this driver can perform
                 loadStack.push(load);
                 currentTotalTime += load.getDistanceFromDepot() + load.getDistanceFromPickUpToDropOff();
                 driverCurrentTotalTimeStack.push(currentTotalTime);
 
+                //checking if driver has enough time to work on other loads
                 Double driverUsedTimeInPercent = getDriverUsedTimeInPercent(currentTotalTime);
                 if (driverUsedTimeInPercent < AppConfig.CHECK_OTHER_LOAD_THRESHOLD) {
                     if (load.getLoadNumber() == 73 || load.getLoadNumber() == 24) {
                         String breakpoint = "";
                     }
 
+                    //find the next closest load from the existing drop off
                     Load nextLoad = getNextClosestLoadProspect(load, currentTotalTime);
                     while (nextLoad != null) {
                         Load parentLoad = loadMap.get(nextLoad.getLoadNumber());
@@ -63,6 +68,7 @@ public class LoadAssignment {
                     }
                 }
 
+                //check and filter all the loads are within a driver total time limit
                 Boolean totalTimeAdded = false;
                 while (!loadStack.isEmpty()) {
                     Load currentLoad = loadStack.peek();
@@ -90,6 +96,12 @@ public class LoadAssignment {
         return result;
     }
 
+    /**
+     * finding the next closest load from the current drop off
+     * @param parentLoad
+     * @param currentTotalTime
+     * @return
+     */
     private Load getNextClosestLoadProspect(Load parentLoad, Double currentTotalTime) {
         List<Load> otherLoadList = parentLoad.getDropOffToOtherLoads().stream()
                 .sorted((a, b) -> Double.compare(a.getDistanceFromSourceDropOff(), b.getDistanceFromSourceDropOff()))
