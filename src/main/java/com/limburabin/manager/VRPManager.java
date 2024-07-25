@@ -10,8 +10,10 @@ import com.limburabin.model.*;
 
 public class VRPManager {
     private Map<Integer, Load> loadMap = new HashMap<>();
+    private final boolean superMode;
 
-    public VRPManager() {
+    public VRPManager(boolean superMode) {
+        this.superMode = superMode;
     }
 
     /**
@@ -79,6 +81,10 @@ public class VRPManager {
         for (Load load : loadMap.values()) {
             if (!source.getLoadNumber().equals(load.getLoadNumber())) {
                 Double distanceFromSourceDropOff = getDistance(source.getDropOff(), load.getPickUp());
+                if(this.superMode) {
+                    Double currentLoadDistanceFromPickUpToDropOff = getDistance(load.getPickUp(), load.getDropOff());
+                    distanceFromSourceDropOff += currentLoadDistanceFromPickUpToDropOff;
+                }
                 Load otherLoad = new Load(load, distanceFromSourceDropOff);
                 distanceToOtherLoads.add(otherLoad);
             }
@@ -93,7 +99,7 @@ public class VRPManager {
     }
 
     public void assignLoadsToDrivers() {
-        LoadAssignment loadAssignment = new LoadAssignment(this.loadMap);
+        LoadAssignment loadAssignment = new LoadAssignment(this.loadMap, this.superMode);
         Result result = loadAssignment.assignLoadsToDrivers();
         for (List<Integer> loadAssigned : result.allLoadAssigned) {
             System.out.println(loadAssigned);

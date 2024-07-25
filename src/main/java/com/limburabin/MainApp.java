@@ -14,6 +14,9 @@ public class MainApp {
         vrpFilePath.setRequired(true);
         options.addOption(vrpFilePath);
 
+        Option superModeArg = new Option("sm", "super-mode", true, "super mode on/off");
+        options.addOption(superModeArg);
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd = null;
@@ -27,8 +30,9 @@ public class MainApp {
         }
 
         String filePath = cmd.getOptionValue("vehicle-route-problem");
+        Boolean superMode = Boolean.valueOf(cmd.getOptionValue("super-mode"));
         if (!AppUtil.isNullOrEmpty(filePath)) {
-            VRPManager vrpManager = new VRPManager();
+            VRPManager vrpManager = new VRPManager(superMode);
             vrpManager.importLoads(filePath);
             vrpManager.assignLoadsToDrivers();
         }

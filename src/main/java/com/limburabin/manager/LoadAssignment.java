@@ -9,9 +9,11 @@ import com.limburabin.model.*;
 
 public class LoadAssignment {
     private Map<Integer, Load> loadMap = null;
+    private final boolean superMode;
 
-    LoadAssignment(Map<Integer, Load> loadMap) {
+    LoadAssignment(Map<Integer, Load> loadMap, boolean superMode) {
         this.loadMap = loadMap;
+        this.superMode = superMode;
     }
 
     /**
@@ -131,8 +133,10 @@ public class LoadAssignment {
     }
 
     public Double getTotalTimeToDropOffLoad(Load nextLoad, Double currentTotalTime) {
-        Double totalTimeToDropOffLoad = nextLoad.getDistanceFromSourceDropOff() +
-                nextLoad.getDistanceFromPickUpToDropOff() + currentTotalTime;
+        Double totalTimeToDropOffLoad = this.superMode ? nextLoad.getDistanceFromSourceDropOff() :
+                nextLoad.getDistanceFromSourceDropOff() +
+                nextLoad.getDistanceFromPickUpToDropOff();
+        totalTimeToDropOffLoad += currentTotalTime;
         return totalTimeToDropOffLoad;
     }
 
