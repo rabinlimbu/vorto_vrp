@@ -88,6 +88,7 @@ public class LoadAssignment {
                     loadStack.pop();
                     driverCurrentTotalTimeStack.pop();
                 }
+                Collections.reverse(loadAssigned);
                 allLoadAssigned.add(loadAssigned);
             }
         }
