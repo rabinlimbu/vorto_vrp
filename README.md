@@ -9,4 +9,10 @@ Execute via command line:
 1) cd to a directory of this project on your machine and if you are on current directory on /build
 than copy and paste below command to execute. please make sure the file path has -vrp <absolute path to a file> 
 and if not you will get error stating its required.
-2) java -jar vorto_vrp.jar -vrp /Users/rabinlimbu/development/vorto/training-problems/problem20.txt
+Updated with another argument called super-mode true/false will give better cost based on datasets.
+For training-problems, "-sm false" or no "-sm" gives better total cost.
+Below are two commands with -sm true or false.  Basically in the same sense, we can add more algorithms with additional optional arguments.
+$ java -jar vorto_vrp.jar -vrp /Users/rabinlimbu/development/vorto/training-problems/problem20.txt
+or
+$ java -jar vorto_vrp.jar -sm true -vrp /Users/rabinlimbu/development/vorto/training-problems/problem20.txt
+
