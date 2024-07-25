@@ -9,5 +9,5 @@ public class AppConfig {
 
     // this threshold is to control assigning load to driver
     // based on driver usage time
-    public final static Double CHECK_OTHER_LOAD_THRESHOLD = 90.0;
+    public final static Double CHECK_OTHER_LOAD_THRESHOLD = 98.0;
 }
